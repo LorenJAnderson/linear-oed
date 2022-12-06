@@ -1,26 +1,39 @@
-import formulas
-import numpy as np
-from itertools import combinations_with_replacement as cwr
 import pickle
+from itertools import combinations_with_replacement as cwr
 
+import numpy as np
 
-DESIGN_SPACE = [0.1 * i for i in range(1, 11)]
+import formulas
+
+DES_SPACE = [0.1 * i for i in range(1, 11)]
 DES_SEQ_LEN = 10
-DESIGN_SEQUENCES = list(cwr(DESIGN_SPACE, DES_SEQ_LEN))
+ALL_DES_SEQS = list(cwr(DES_SPACE, DES_SEQ_LEN))
+DATA_FILENAME = 'batch_scores.p'
 
 
-def experiment():
-    results = {des: None for des in DESIGN_SEQUENCES}
-    for i, des_seq in enumerate(DESIGN_SEQUENCES):
-        if (i % 10000) == 0:
-            print(i, ' out of ', len(DESIGN_SEQUENCES))
-        mean = np.array([[0], [0]])
-        cov = np.array([[1, 0], [0, 1]])
-        post_mean, post_cov = formulas.batch_update(mean, cov, des_seq, 1, 1)
-        score = formulas.calc_exp_kl(post_cov, cov)
-        results[des_seq] = score
-    filename = 'data.p'
-    pickle.dump(results, open(filename, "wb"))
+def score_sequence(des_seq: tuple) -> float:
+    """
+    Scores a single batch design sequence with KL divergence. Observations are
+    irrelevant to score and are set at default value 1.0.
+
+    Keyword arguments:
+    des_seq -- the design sequence of given length
+    """
+    mean = np.array([[0.0], [0.0]])
+    cov = np.array([[1.0, 0.0], [0.0, 1.0]])
+    obs = tuple([1.0] * DES_SEQ_LEN)
+    post_mean, post_cov = formulas.batch_update(mean, cov, des_seq,
+                                                obs=obs, sigma=1.0)
+    return formulas.calc_exp_kl(post_cov, cov)
+
+
+def experiment() -> None:
+    """
+    Determines batch design scores for all possible design sequences of given
+    length. Dumps dictionary of scores into pickle file.
+    """
+    scores = {des_seq: score_sequence(des_seq) for des_seq in ALL_DES_SEQS}
+    pickle.dump(scores, open(DATA_FILENAME, "wb"))
 
 
 if __name__ == "__main__":
