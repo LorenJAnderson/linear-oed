@@ -12,7 +12,7 @@ def init_value_functions():
     all_sequences = []
     for i in range(1, 11):
         all_sequences += list(cwr(DESIGN_SPACE, i))
-    return {seq: 0 for seq in all_sequences}
+    return {seq: 0.0 for seq in all_sequences}
 
 
 def experiment():
@@ -23,7 +23,8 @@ def experiment():
             if len(key) == 10:
                 mean = np.array([[0], [0]])
                 cov = np.array([[1, 0], [0, 1]])
-                post_mean, post_cov = formulas.batch_update(mean, cov, list(key), 1, 1)
+                post_mean, post_cov = formulas.batch_update(mean, cov, key,
+                                                            tuple([1]*10), 1)
                 all_sequences[key] = formulas.calc_exp_kl(post_cov, cov)
             else:
                 best_score = -1

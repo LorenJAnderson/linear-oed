@@ -7,7 +7,7 @@ plt.rcParams["font.family"] = "Times New Roman"
 # plt.rcParams["font.weight"] = 'bold'
 plt.rcParams["font.size"] = 15
 
-scores = pickle.load(open("data.p", "rb"))
+scores = pickle.load(open("greedy_scores.p", "rb"))
 print(scores)
 score_mat = np.zeros((10, 10))
 for i, the_list in enumerate(scores):
