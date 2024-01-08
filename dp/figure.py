@@ -14,7 +14,7 @@ for i in range(1, 11):
 for i in range(1, 11):
     print(len(holders[11-i]))
 
-data = [norm.rvs(loc=i, scale=2, size=50) for i in range(8)]
+# data = [norm.rvs(loc=i, scale=2, size=50) for i in range(8)]
 data = [holders[i] for i in range(1, 11)]
 
 x_axis = np.arange(1.2, 1.8, 0.01)
