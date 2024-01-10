@@ -34,30 +34,30 @@ def create_targets(states, exp, reg):
     return np.array(targets)
 
 
-# regs = {i: None for i in range(0, 10)}
-# # states = pickle.load(open("data.p", "rb"))
-# states = list(cwr(DESIGN_SPACE, 10))
-# print(len(states))
-# new_states = []
-# for state in states:
-#     new_states.append(list(state))
-# states = new_states
-# # print(states)
-# for i in range(10):
-#     print(10-i)
-#     exp = 10-i
-#     reg = KNeighborsRegressor(n_neighbors=5)
-#     if exp == 10:
-#         Y = create_targets9(states)
-#     else:
-#         Y = create_targets(states, exp, regs[exp+1])
-#     X = np.array([sorted(state[0:exp]) for state in states])
-#     Y = Y.reshape(-1, 1)
-#     print(X.shape, Y.shape)
-#     reg.fit(X=X, y=Y)
-#     print(np.max(reg.predict(X)))
-#     regs[exp] = reg
-# pickle.dump(regs, open('regressors.p', "wb"))
+regs = {i: None for i in range(0, 10)}
+# states = pickle.load(open("data.p", "rb"))
+states = list(cwr(DESIGN_SPACE, 10))
+print(len(states))
+new_states = []
+for state in states:
+    new_states.append(list(state))
+states = new_states
+# print(states)
+for i in range(10):
+    print(10-i)
+    exp = 10-i
+    reg = KNeighborsRegressor(n_neighbors=5)
+    if exp == 10:
+        Y = create_targets9(states)
+    else:
+        Y = create_targets(states, exp, regs[exp+1])
+    X = np.array([sorted(state[0:exp]) for state in states])
+    Y = Y.reshape(-1, 1)
+    print(X.shape, Y.shape)
+    reg.fit(X=X, y=Y)
+    print(np.max(reg.predict(X)))
+    regs[exp] = reg
+pickle.dump(regs, open('regressors.p', "wb"))
 
 regs = pickle.load(open('regressors.p', "rb"))
 des_seq = []
