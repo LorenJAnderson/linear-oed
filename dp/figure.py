@@ -10,12 +10,12 @@ FIGURE_FILENAME = 'dp_results.png'
 
 def figure_plotter() -> None:
     """Plots ridgeline plot of value function distributions after each experiment."""
-    all_sequences = pickle.load(open(DATA_FILENAME, "rb"))
+    value_dict = pickle.load(open(DATA_FILENAME, "rb"))
     holders = {i: [] for i in range(1, 11)}
     for i in range(1, 11):
-        for key in all_sequences.keys():
+        for key in value_dict.keys():
             if len(key) == i:
-                holders[i].append(all_sequences[key])
+                holders[i].append(value_dict[key])
 
     x_axis = np.arange(1.2, 1.8, 0.01)
     plt.rcParams["font.size"] = 15

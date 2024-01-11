@@ -24,7 +24,6 @@ def experiment() -> None:
     of value functions into pickle file."""
     value_dict = init_value_functions()
     for i in range(10):
-        print(i)
         for key in value_dict.keys():
             if len(key) == 10:
                 mean = np.array([[0], [0]])
