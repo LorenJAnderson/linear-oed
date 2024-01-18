@@ -62,12 +62,10 @@ def experiment() -> None:
         current_reg = None
         if exp != 9:
             current_reg = regressor_dict[exp+1]
-        Y = create_targets(trajectories, exp, current_reg)
-        X = np.array([sorted(state[0:exp+1]) for state, _ in trajectories])
-        Y = Y.reshape(-1, 1)
-        print(X.shape, Y.shape)
-        regressor.fit(X=X, y=Y)
-        print(np.max(regressor.predict(X)))
+        targets = create_targets(trajectories, exp, current_reg)
+        targets = targets.reshape(-1, 1)
+        state_action_pairs = np.array([sorted(state[0:exp+1]) for state, _ in trajectories])
+        regressor.fit(X=state_action_pairs, y=targets)
         regressor_dict[exp] = regressor
     pickle.dump(regressor_dict, open(REGRESSOR_DATA_FILENAME, "wb"))
 
