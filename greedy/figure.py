@@ -6,6 +6,8 @@ import numpy as np
 
 DATA_FILENAME = 'greedy_scores.p'
 FIGURE_FILENAME = 'greedy_results.png'
+NUM_EXPERIMENTS = 10
+NUM_DESIGNS = 10
 
 
 def figure_plotter() -> None:
@@ -14,19 +16,19 @@ def figure_plotter() -> None:
     plt.rcParams["font.size"] = 15
     scores = pickle.load(open(DATA_FILENAME, "rb"))
 
-    score_mat = np.zeros((10, 10))
-    for i, the_list in enumerate(scores):
-        for j, element in enumerate(the_list):
-            score_mat[j, i] = "{:.2f}".format(element)
+    score_mat = np.zeros((NUM_EXPERIMENTS, NUM_DESIGNS))
+    for exp, exp_scores in enumerate(scores):
+        for des_idx, score in enumerate(exp_scores):
+            score_mat[des_idx, exp] = "{:.2f}".format(score)
 
     _, ax = plt.subplots(figsize=(9, 6))
-    y_labels = [round(i * 0.1 + 0.1, 1) for i in range(10)]
+    y_labels = [round(i * 0.1, 1) for i in range(1, 11)]
     ax = sns.heatmap(score_mat, annot=True, linewidths=.5, ax=ax, cmap='gray',
                      cbar_kws={'label': r'$U({\bf d})$'}, yticklabels=y_labels)
     ax.invert_yaxis()
     plt.xlabel('Experiment')
     plt.ylabel(r'${\bf d}$')
-    plt.title('Greedy ' + r'$U({\bf d})$' + ' Scores per Experiment')
+    plt.title('Greedy Marginal ' + r'$U({\bf d})$' + ' per Experiment')
     plt.savefig(FIGURE_FILENAME)
 
 
