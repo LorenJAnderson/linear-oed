@@ -13,18 +13,18 @@ DATA_FILENAME = 'batch_scores.p'
 
 def score_sequence(des_seq: tuple) -> float:
     """
-    Scores a single batch design sequence with KL divergence. Observations are
-    irrelevant to score and are set at default value 1.0.
+    Scores a single batch design sequence with expected KL-divergence.
+    Observations are irrelevant to score and are set at default value 1.0.
 
     Keyword arguments:
     des_seq -- the design sequence of given length
     """
-    mean = np.array([[0.0], [0.0]])
-    cov = np.array([[1.0, 0.0], [0.0, 1.0]])
-    obs = tuple([1.0] * DES_SEQ_LEN)
-    post_mean, post_cov = formulas.batch_update(mean, cov, des_seq,
-                                                obs=obs, sigma=1.0)
-    return formulas.calc_exp_kl(post_cov, cov)
+    prior_mean = np.array([[0.0], [0.0]])
+    prior_cov = np.array([[1.0, 0.0], [0.0, 1.0]])
+    obs_seq = tuple([1.0] * DES_SEQ_LEN)
+    post_mean, post_cov = formulas.batch_update(prior_mean, prior_cov, des_seq,
+                                                obs_seq, 1.0)
+    return formulas.calc_exp_kl(post_cov, prior_cov)
 
 
 def experiment() -> None:

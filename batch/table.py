@@ -14,7 +14,8 @@ def table_printer() -> None:
     for rank, (score, des_seq) in enumerate(sorted_scores_and_des_seqs):
         if rank in DESIRED_RANKS:
             des_seq = tuple([round(des, 1) for des in list(des_seq)])
-            print(str(rank) + " " + str(des_seq) + " " + '{:.3f}'.format(score))
+            print(str(rank) + " " + str(des_seq) +
+                  " " + '{:.3f}'.format(score))
 
 
 if __name__ == "__main__":
