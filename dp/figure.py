@@ -6,14 +6,15 @@ import matplotlib.pyplot as plt
 
 DATA_FILENAME = 'dp_values.p'
 FIGURE_FILENAME = 'dp_results.png'
+MAX_EXPS = 10
 
 
 def figure_plotter() -> None:
     """Produces ridgeline plot of value function distributions after each
     experiment."""
     value_dict = pickle.load(open(DATA_FILENAME, "rb"))
-    exp_values = {exp: [] for exp in range(10)}
-    for exp in range(10):
+    exp_values = {exp: [] for exp in range(MAX_EXPS)}
+    for exp in range(MAX_EXPS):
         for key in value_dict.keys():
             if len(key) == exp+1:
                 exp_values[exp].append(value_dict[key])
@@ -24,11 +25,11 @@ def figure_plotter() -> None:
     fig.suptitle('Progression of Value Distribution')
     fig.supxlabel('Value')
     fig.supylabel('Experiment')
-    for exp in range(10):
+    for exp in range(MAX_EXPS):
         axs[exp].plot(x_axis, gaussian_kde(exp_values[exp])(x_axis))
         axs[exp].set_ylabel(str(exp))
         axs[exp].set_yticks([])
-        if exp != 9:
+        if exp != MAX_EXPS-1:
             axs[exp].set_xticks([])
     plt.savefig(FIGURE_FILENAME)
 

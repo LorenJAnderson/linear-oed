@@ -22,8 +22,9 @@ def init_value_functions() -> dict:
 def experiment() -> None:
     """Completes 10 dynamic programming updates on each design sequence.
     Terminal states are given value equal to reward of transitioning to
-    these states so that these rewards only need to be calculated once. Dumps
-    dictionary of value functions into pickle file."""
+    these states so that these rewards only need to be calculated once.
+    Value of start state with length 0 is not computed. Dumps dictionary of
+    value functions into pickle file."""
     value_dict = init_value_functions()
     for _ in range(MAX_EXPS):
         for key in value_dict.keys():

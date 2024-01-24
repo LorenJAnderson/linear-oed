@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 TRUE_VALUE_FILENAME = '../dp/dp_values.p'
 REGRESSOR_FILENAME = 'regressors.p'
 FIGURE_FILENAME = 'adp_results.png'
+TOT_EXPS = 10
 
 
 def figure_plotter() -> None:
@@ -13,7 +14,7 @@ def figure_plotter() -> None:
     experiment number. True values are obtained through dynamic programming."""
     regressors = pickle.load(open("regressors.p", "rb"))
     true_value_dict = pickle.load(open("../dp/dp_values.p", "rb"))
-    exp_buckets = {exp: [] for exp in range(0, 10)}
+    exp_buckets = {exp: [] for exp in range(TOT_EXPS)}
     for key in true_value_dict:
         current_exp = len(key) - 1
         prediction = regressors[current_exp].predict([key])[0][0]
@@ -25,7 +26,8 @@ def figure_plotter() -> None:
     plt.xlabel('Experiment')
     plt.ylabel('Absolute Error')
     plt.title('Absolute Error in ADP Regressors')
-    plt.violinplot([exp_buckets[exp] for exp in range(0, 10)], showmeans=True)
+    plt.violinplot([exp_buckets[exp] for exp in range(TOT_EXPS)],
+                   showmeans=True)
     plt.savefig(FIGURE_FILENAME, bbox_inches='tight')
 
 

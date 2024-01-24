@@ -6,8 +6,8 @@ import numpy as np
 
 DATA_FILENAME = 'greedy_scores.p'
 FIGURE_FILENAME = 'greedy_results.png'
-NUM_EXPERIMENTS = 10
-NUM_DESIGNS = 10
+TOT_EXPS = 10
+DES_SPACE_SIZE = 10
 
 
 def figure_plotter() -> None:
@@ -16,7 +16,7 @@ def figure_plotter() -> None:
     plt.rcParams["font.size"] = 15
     scores = pickle.load(open(DATA_FILENAME, "rb"))
 
-    score_mat = np.zeros((NUM_EXPERIMENTS, NUM_DESIGNS))
+    score_mat = np.zeros((TOT_EXPS, DES_SPACE_SIZE))
     for exp, exp_scores in enumerate(scores):
         for des_idx, score in enumerate(exp_scores):
             score_mat[des_idx, exp] = "{:.2f}".format(score)
