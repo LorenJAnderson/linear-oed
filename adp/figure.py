@@ -9,9 +9,11 @@ TOT_EXPS = 10
 
 
 def figure_plotter() -> None:
-    """Plots violin plot of error between estimated and true state-action
+    """
+    Plots violin plot of error between estimated and true state-action
     values in the regressors for all design sequences, conditioned on
-    experiment number. True values are obtained through dynamic programming."""
+    experiment number. Ground truth values are obtained through DP.
+    """
     regressors = pickle.load(open("regressors.p", "rb"))
     true_value_dict = pickle.load(open("../dp/dp_values.p", "rb"))
     exp_buckets = {exp: [] for exp in range(TOT_EXPS)}

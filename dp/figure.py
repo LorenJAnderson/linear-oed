@@ -10,8 +10,10 @@ MAX_EXPS = 10
 
 
 def figure_plotter() -> None:
-    """Produces ridgeline plot of value function distributions after each
-    experiment."""
+    """
+    Produces ridgeline plot of value function distributions after each
+    experiment.
+    """
     value_dict = pickle.load(open(DATA_FILENAME, "rb"))
     exp_values = {exp: [] for exp in range(MAX_EXPS)}
     for exp in range(MAX_EXPS):

@@ -5,7 +5,7 @@ from sklearn.neighbors import KNeighborsRegressor
 
 import formulas
 
-DESIGN_SPACE = [round(0.1 * i, 1) for i in range(1, 11)]
+DES_SPACE = [round(0.1 * i, 1) for i in range(1, 11)]
 NUM_TRAJECTORIES = 100_000
 TOT_EXPS = 10
 TRAJECTORY_DATA_FILENAME = 'trajectories.p'
@@ -13,13 +13,15 @@ REGRESSOR_DATA_FILENAME = 'regressors.p'
 
 
 def generate_trajectories() -> None:
-    """Generates random trajectories and stores each terminal state and
-    associated reward in a list. Dumps list into pickle file."""
+    """
+    Generates random trajectories and stores each terminal state and
+    associated reward in a list. Dumps list into pickle file.
+    """
     all_trajectories = []
     for _ in range(NUM_TRAJECTORIES):
         state = []
         for _ in range(TOT_EXPS):
-            state.append(np.random.choice(DESIGN_SPACE))
+            state.append(np.random.choice(DES_SPACE))
         mean = np.array([[0.0], [0.0]])
         prior_cov = np.array([[1.0, 0.0], [0.0, 1.0]])
         obs = tuple([1.0] * TOT_EXPS)
@@ -31,7 +33,8 @@ def generate_trajectories() -> None:
 
 
 def create_targets(trajectories, exp, regressor=None):
-    """Creates the target action-values at given experiment. Terminal reward
+    """
+    Creates the target action-values at given experiment. Terminal reward
     is used as the target during the last experiment. Otherwise, the maximum
     action-value of the next state is used as the target.
 
@@ -46,7 +49,7 @@ def create_targets(trajectories, exp, regressor=None):
             targets.append(reward)
         else:
             scores = [regressor.predict([sorted(state[0:exp+1] + [des])])
-                      for des in DESIGN_SPACE]
+                      for des in DES_SPACE]
             targets.append(max(scores))
     return np.array(targets)
 

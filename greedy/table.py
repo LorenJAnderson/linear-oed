@@ -8,11 +8,13 @@ DES_SPACE_SIZE = 10
 
 
 def table_printer() -> None:
-    """Prints marginal scores for ten experiments, assuming that the
+    """
+    Prints marginal scores for ten experiments, assuming that the
     previous design sequence was chosen greedily. Rows are individual
     designs from 0.1 to 1.0, and columns are experiments. The
     best design for each experiment is used to form the greedy design
-    sequence for subsequent experiments."""
+    sequence for subsequent experiments.
+    """
     scores = pickle.load(open(DATA_FILENAME, "rb"))
     score_mat = np.zeros((TOT_EXPS, DES_SPACE_SIZE))
     for exp, exp_scores in enumerate(scores):
