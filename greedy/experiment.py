@@ -5,7 +5,7 @@ import numpy as np
 import formulas
 
 
-DESIGN_SPACE = [round(0.1 * i, 1) for i in range(1, 11)]
+DES_SPACE = [round(0.1 * i, 1) for i in range(1, 11)]
 DES_SEQ_LEN = 10
 DATA_FILENAME = 'greedy_scores.p'
 
@@ -23,10 +23,10 @@ def det_best_design(prior_mean: np.array, prior_cov: np.array, obs: tuple,
     sig -- the noise factor
     """
     posteriors = [formulas.batch_update(prior_mean, prior_cov, tuple([des]),
-                                        obs, sigma)[1] for des in DESIGN_SPACE]
+                                        obs, sigma)[1] for des in DES_SPACE]
     scores = [formulas.calc_exp_kl(post_cov, prior_cov)
               for post_cov in posteriors]
-    best_score, best_des = sorted(zip(scores, DESIGN_SPACE), reverse=True)[0]
+    best_score, best_des = sorted(zip(scores, DES_SPACE), reverse=True)[0]
     post_mean, post_cov = formulas.batch_update(prior_mean, prior_cov,
                                                 tuple([best_des]), obs, sigma)
     return best_des, best_score, post_mean, post_cov, scores

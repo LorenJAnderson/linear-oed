@@ -1,6 +1,6 @@
 import pickle
 
-DESIGN_SPACE = [round(0.1 * i, 1) for i in range(1, 11)]
+DES_SPACE = [round(0.1 * i, 1) for i in range(1, 11)]
 DATA_FILENAME = 'dp_values.p'
 
 

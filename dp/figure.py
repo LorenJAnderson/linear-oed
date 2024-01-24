@@ -9,13 +9,14 @@ FIGURE_FILENAME = 'dp_results.png'
 
 
 def figure_plotter() -> None:
-    """Plots ridgeline plot of value function distributions after each experiment."""
+    """Produces ridgeline plot of value function distributions after each
+    experiment."""
     value_dict = pickle.load(open(DATA_FILENAME, "rb"))
-    holders = {i: [] for i in range(1, 11)}
-    for i in range(1, 11):
+    exp_values = {exp: [] for exp in range(10)}
+    for exp in range(10):
         for key in value_dict.keys():
-            if len(key) == i:
-                holders[i].append(value_dict[key])
+            if len(key) == exp+1:
+                exp_values[exp].append(value_dict[key])
 
     x_axis = np.arange(1.2, 1.8, 0.01)
     plt.rcParams["font.size"] = 15
@@ -23,12 +24,12 @@ def figure_plotter() -> None:
     fig.suptitle('Progression of Value Distribution')
     fig.supxlabel('Value')
     fig.supylabel('Experiment')
-    for i in range(10):
-        axs[i].plot(x_axis, gaussian_kde(holders[i+1])(x_axis))
-        axs[i].set_ylabel(str(i))
-        axs[i].set_yticks([])
-        if i != 9:
-            axs[i].set_xticks([])
+    for exp in range(10):
+        axs[exp].plot(x_axis, gaussian_kde(exp_values[exp])(x_axis))
+        axs[exp].set_ylabel(str(exp))
+        axs[exp].set_yticks([])
+        if exp != 9:
+            axs[exp].set_xticks([])
     plt.savefig(FIGURE_FILENAME)
 
 
