@@ -3,18 +3,14 @@
 This directory details the algorithm in sections **III-E** and **IV-E** of the 
 paper.
 
-`experiment.py` generates a `trajectories.p` file of 100_000 random 
-trajectories that include the final design sequence and the associated reward.
-It then uses the random trajectory data to learn state-action regressors 
-for each experiment, and the learned regressors are stored in a `regressors.p`
-file. This code takes roughly half an hour to run on our machine. 
+`experiment.py` creates a `logs` folder and generates two files that detail 
+the training and testing progress of a DQN agent applied to the linear OED 
+environment. The first is a TensorBoard event file and the second is an 
+`evaluations.npz` file that contains the testing rewards. The event file 
+will need to be renamed when generating the table and figure. This code 
+runs in a few minutes on our machine.
 
-`table.py` prints the current design sequence, the most promising action 
-given the current design sequence, and the expected score by continually 
-choosing the most promising action. 
+`table.py` prints the DQN training and testing reward values.
 
-`figure.py` saves a violin plot `adp_results.png` of the error in the 
-estimated and true state-action values in the regressors for all design 
-sequences, conditioned on the experiment number. It uses the
-`../dp/dp_values.p` dynamic programming file for ground truth values of each 
-design sequence. This code takes roughly one minute to run.
+`figure.py` saves a line plot `drl_results.png` of the DQN training and 
+testing rewards.
