@@ -22,7 +22,7 @@ class Environment(gym.Env):
 
     def step(self, action):
         """ #TODO """
-        converted_action = action*0.1
+        converted_action = action*0.1 + 0.1
         self.state[self.time_step] = converted_action
         self.time_step += 1
         term = self.time_step == 10
@@ -32,11 +32,8 @@ class Environment(gym.Env):
             mean = np.array([[0.0], [0.0]])
             prior_cov = np.array([[1.0, 0.0], [0.0, 1.0]])
             obs = tuple([1.0] * 10)
-            post_mean, post_cov = formulas.batch_update(mean,
-                                                        prior_cov,
-                                                        self.state,
-                                                        obs=obs,
-                                                        sigma=1.0)
+            post_mean, post_cov = formulas.batch_update(
+                mean, prior_cov, self.state, obs, sigma=1.0)
             reward = formulas.calc_exp_kl(post_cov, prior_cov)
         info = {}
         return copy.deepcopy(self.state), reward, term, trunc, info
