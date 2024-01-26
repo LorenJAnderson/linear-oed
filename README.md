@@ -10,8 +10,8 @@ The code includes a `requirements.txt` file for package installation.
 ---
 
 # Notes
- - Unless otherwise specified in the individual READMEs, the code runs 
-instantaneously. The longest script takes roughly half an hour to run.
+ - Unless otherwise specified in the individual `README.md` files, the code 
+   runs instantaneously. The longest script takes roughly half an hour to run.
  - After running `drl/experiment.py`, the TensorBoard event file will need 
    to be renamed when analyzing the data in the `drl/table.py` and 
    `drl/figure.py` files.  

@@ -56,8 +56,8 @@ class LinearOEDEnv(gym.Env):
 
 def experiment() -> None:
     """
-    Trains DQN agent on linear OED environment. Saves tensorboard log for
-    training rewards and saves evaluations log for testing rewards.
+    Trains DQN agent on linear OED environment. Saves tensorboard events
+    file for training rewards and saves evaluations file for testing rewards.
     Evaluation is deterministic, so only one evaluation episode is needed.
     """
     train_env = LinearOEDEnv()
@@ -74,4 +74,3 @@ def experiment() -> None:
 
 if __name__ == "__main__":
     experiment()
-
