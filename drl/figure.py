@@ -36,7 +36,6 @@ def figure_plotter() -> None:
     plt.xticks([0, 20, 40, 60, 80, 100], [str(x*40_000) for x in range(6)])
     plt.ylabel('Reward')
     plt.title('DQN Training and Testing Rewards')
-    plt.show()
     plt.savefig(FIGURE_FILENAME, bbox_inches='tight')
 
 
